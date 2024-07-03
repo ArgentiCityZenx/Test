@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Título de la página</title>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+    <button id="google-login-btn">Iniciar sesión con Google</button>
+<script>
+// Llama a esta función cuando el botón de inicio de sesión de Google sea clicado
+function signInWithGoogle() {
+    const googleAuth = gapi.auth2.getAuthInstance();
+    googleAuth.signIn().then(googleUser => {
+        const idToken = googleUser.getAuthResponse().id_token;
+        // Envía el token de ID al servidor para la verificación
+        // Aquí deberías implementar la lógica para enviar el token a tu servidor y manejar la sesión del usuario
+    }).catch(error => {
+        console.error('Error al iniciar sesión con Google:', error);
+    });
+}
+
+function initGoogleAuth() {
+    gapi.load('auth2', () => {
+        gapi.auth2.init({
+            client_id: '231347270091-ufbhbinpajhov2o0h630f6m5t931o34t.apps.googleusercontent.com' // Reemplaza con tu ID de cliente OAuth
+        });
+        // Ahora puedes usar gapi.auth2 y otros métodos de gapi aquí
+        document.getElementById('google-login-btn').addEventListener('click', signInWithGoogle);
+    });
+}
+
+// Llama a la función de inicialización cuando se cargue la página
+document.addEventListener('DOMContentLoaded', initGoogleAuth);
+</script>
+</body>
+</html>
